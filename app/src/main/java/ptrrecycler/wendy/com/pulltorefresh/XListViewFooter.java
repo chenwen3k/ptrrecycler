@@ -37,7 +37,6 @@ public class XListViewFooter extends LinearLayout {
 		super(context, attrs);
 		initView(context);
 	}
-
 	
 	public void setState(int state) {
 		if (state == STATE_READY) {

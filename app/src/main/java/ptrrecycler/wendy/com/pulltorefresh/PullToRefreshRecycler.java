@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 
 
 /**
- * Created by mfw on 14-11-6.
+ * Created by 3k on 14-11-6.
  */
 public class PullToRefreshRecycler extends RecyclerView {
     private PullToRefreshAdapter mAdapter;
@@ -19,7 +19,7 @@ public class PullToRefreshRecycler extends RecyclerView {
 
     public PullToRefreshRecycler(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mDecorator = new MyPullToRefreshDecorator(this, context, attrs);
+        mDecorator = new SimplePullToRefreshDecorator(this, context, attrs);
         mDecorator.setOnScrollListener(new OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -61,7 +61,7 @@ public class PullToRefreshRecycler extends RecyclerView {
         return super.onTouchEvent(e);
     }
 
-    private class MyPullToRefreshDecorator extends PullToRefreshDecorator {
+    private class SimplePullToRefreshDecorator extends PullToRefreshDecorator {
 
         /**
          * Add a pull to refresh view to any view
@@ -71,7 +71,7 @@ public class PullToRefreshRecycler extends RecyclerView {
          * @param context
          * @param attrs
          */
-        public MyPullToRefreshDecorator(PullToRefreshRecycler recycler, Context context, AttributeSet attrs) {
+        public SimplePullToRefreshDecorator(PullToRefreshRecycler recycler, Context context, AttributeSet attrs) {
             super(recycler, context, attrs);
         }
 

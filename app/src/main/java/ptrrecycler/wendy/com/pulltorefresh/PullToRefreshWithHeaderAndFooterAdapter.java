@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by mfw on 14-11-10.
+ * Created by 3k on 14-11-10.
  */
 public abstract class PullToRefreshWithHeaderAndFooterAdapter extends PullToRefreshAdapter {
     private static final int TYPE_HEADER = 3;

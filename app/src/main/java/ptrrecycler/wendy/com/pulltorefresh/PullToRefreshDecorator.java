@@ -21,7 +21,7 @@ import ptrrecycler.wendy.com.myapplication.R;
 
 
 /**w
- * Created by mfw on 14-11-6.
+ * Created by 3k on 14-11-6.
  */
 public abstract class PullToRefreshDecorator {
 
@@ -73,7 +73,7 @@ public abstract class PullToRefreshDecorator {
 
     /**
      * Add a pull to refresh view to any view
-     * set a refresh listener {@link com.mfw.roadbook.pulltorefresh.PullToRefreshDecorator#setXListViewListener(com.mfw.roadbook.pulltorefresh.PullToRefreshDecorator.IXListViewListener)}.
+     * set a refresh listener
      *
      * @param context
      * @param attrs
