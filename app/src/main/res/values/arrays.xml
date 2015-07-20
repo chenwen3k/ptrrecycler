@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="titles">
+        <item>Android</item>
+        <item>iOS</item>
+        <item>Java</item>
+        <item>C++</item>
+        <item>Ruby</item>
+        <item>Python</item>
+        <item>Scala</item>
+        <item>Groovy</item>
+        <item>C</item>
+        <item>Lisp</item>
+    </string-array>
+
+</resources>
