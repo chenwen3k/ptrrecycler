@@ -74,7 +74,6 @@ public abstract class PullToRefreshAdapter extends RecyclerView.Adapter<PullToRe
     }
 
     public int getLastContentPosition() {
-
         // last position: no footer, size - 1, has footer, size - 2
         int lastPosition = mFooterView == null ? getItemCount() - 1 : getItemCount() - 2;
         return lastPosition;
