@@ -48,6 +48,14 @@ public class PullToRefreshRecycler extends RecyclerView {
         mDecorator.setPullRefreshEnable(enable);
     }
 
+    public void stopRefresh() {
+        mDecorator.stopRefresh();
+    }
+
+    public void stopLoadMore() {
+        mDecorator.stopLoadMore();
+    }
+
     public void setAdapter(PullToRefreshAdapter adapter) {
         super.setAdapter(adapter);
         mAdapter = adapter;
@@ -61,12 +69,21 @@ public class PullToRefreshRecycler extends RecyclerView {
         return super.onTouchEvent(e);
     }
 
-    private class SimplePullToRefreshDecorator extends PullToRefreshDecorator {
+    @Override
+    public void computeScroll() {
+        super.computeScroll();
+        mDecorator.computeScroll();
+    }
 
+    public void setXListViewListener(PullToRefreshDecorator.IXListViewListener listener) {
+        mDecorator.setXListViewListener(listener);
+    }
+
+    private class SimplePullToRefreshDecorator extends PullToRefreshDecorator {
         /**
          * Add a pull to refresh view to any view
          * Step1. set a refresh listener {@link PullToRefreshDecorator#setXListViewListener(PullToRefreshDecorator.IXListViewListener)}.
-         * Step4. call {@link PullToRefreshDecorator#onScroll(android.view.ViewGroup, int, int, int)}.
+         * Step4.
          *
          * @param context
          * @param attrs
@@ -78,33 +95,6 @@ public class PullToRefreshRecycler extends RecyclerView {
         @Override
         public void setMeasuredDimension(int width, int height) {
             this.setMeasuredDimension(width, height);
-        }
-    }
-
-    @Override
-    public void computeScroll() {
-        super.computeScroll();
-        mDecorator.computeScroll();
-    }
-
-    public void setXListViewListener(PullToRefreshDecorator.IXListViewListener listener) {
-        mDecorator.setXListViewListener(listener);
-    }
-
-    public void stopRefresh() {
-        mDecorator.stopRefresh();
-    }
-
-    public void stopLoadMore() {
-        mDecorator.stopLoadMore();
-    }
-
-    @Override
-    public void scrollBy(int x, int y) {
-        try {
-            super.scrollBy(x, y);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
