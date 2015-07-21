@@ -20,8 +20,9 @@ import android.widget.TextView;
 import ptrrecycler.wendy.com.myapplication.R;
 
 
-/**w
- * Created by mfw on 14-11-6.
+/**
+ * w
+ * Created by 3k on 14-11-6.
  */
 public abstract class PullToRefreshDecorator {
 
@@ -64,8 +65,7 @@ public abstract class PullToRefreshDecorator {
     private final static int PULL_LOAD_MORE_DELTA = 50; // when pull up >= 50px
     // at bottom, trigger
     // load more.
-    private final static float OFFSET_RADIO = 1.8f; // support iOS like pull
-    // feature.
+    private final static float OFFSET_RADIO = 1.8f; // support iOS like pull feature.
 
     private Context mContext;
     private ViewGroup mView;
@@ -73,7 +73,7 @@ public abstract class PullToRefreshDecorator {
 
     /**
      * Add a pull to refresh view to any view
-     * set a refresh listener {@link com.mfw.roadbook.pulltorefresh.PullToRefreshDecorator#setXListViewListener(com.mfw.roadbook.pulltorefresh.PullToRefreshDecorator.IXListViewListener)}.
+     * set a refresh listener
      *
      * @param context
      * @param attrs
@@ -98,10 +98,8 @@ public abstract class PullToRefreshDecorator {
         mHeaderLayout.setGravity(Gravity.CENTER);
         mHeaderLayout.addView(mHeaderView);
 
-        mHeaderViewContent = (RelativeLayout) mHeaderView
-                .findViewById(R.id.xlistview_header_content);
-        mHeaderTimeView = (TextView) mHeaderView
-                .findViewById(R.id.xlistview_header_time);
+        mHeaderViewContent = (RelativeLayout) mHeaderView.findViewById(R.id.xlistview_header_content);
+        mHeaderTimeView = (TextView) mHeaderView.findViewById(R.id.xlistview_header_time);
 
         // init footer view
         mFooterView = new XListViewFooter(context);
@@ -122,19 +120,19 @@ public abstract class PullToRefreshDecorator {
                 });
 
         // make sure XListViewFooter is the last footer view, and only add once.
-        if (mIsFooterReady == false) {
+        if (!mIsFooterReady) {
             mIsFooterReady = true;
         }
     }
 
     public void setOnScrollListener(Object l) {
         mScrollListener = l;
-        if(mView instanceof ListView) {
+        if (mView instanceof ListView) {
             ListView listView = (ListView) mView;
             listView.setOnScrollListener((AbsListView.OnScrollListener) l);
-        } else if(mView instanceof RecyclerView) {
+        } else if (mView instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) mView;
-            recyclerView.setOnScrollListener((RecyclerView.OnScrollListener) l);
+            recyclerView.addOnScrollListener((RecyclerView.OnScrollListener) l);
         }
     }
 
@@ -180,7 +178,7 @@ public abstract class PullToRefreshDecorator {
      * stop refresh, reset header view.
      */
     public void stopRefresh() {
-        if (mPullRefreshing == true) {
+        if (mPullRefreshing) {
             mPullRefreshing = false;
             resetHeaderHeight();
         }
@@ -191,7 +189,7 @@ public abstract class PullToRefreshDecorator {
      * stop load more, reset footer view.
      */
     public void stopLoadMore() {
-        if (mPullLoading == true) {
+        if (mPullLoading) {
             mPullLoading = false;
             mFooterView.setState(XListViewFooter.STATE_NORMAL);
         }
@@ -234,9 +232,9 @@ public abstract class PullToRefreshDecorator {
                 mHeaderView.setState(XListViewHeader.STATE_NORMAL);
             }
         }
-        if(mView instanceof ListView) {
-            ((ListView)mView).setSelection(0); // scroll to top each time
-        } else if(mView instanceof RecyclerView) {
+        if (mView instanceof ListView) {
+            ((ListView) mView).setSelection(0); // scroll to top each time
+        } else if (mView instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) mView;
             recyclerView.getLayoutManager().scrollToPosition(0);
         }
@@ -300,14 +298,14 @@ public abstract class PullToRefreshDecorator {
 
     private int getFirstVisiblePosition() {
         int position = 0;
-        if(mView instanceof ListView) {
+        if (mView instanceof ListView) {
             ListView listView = (ListView) mView;
             position = listView.getFirstVisiblePosition();
-        } else if(mView instanceof RecyclerView) {
+        } else if (mView instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) mView;
             LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-            position = layoutManager.findFirstVisibleItemPosition() - (mHeaderView == null || mHeaderView.getVisibility() != View.VISIBLE ?  0 : 1);
-            if(position < 0) {
+            position = layoutManager.findFirstVisibleItemPosition() - (mHeaderView == null || mHeaderView.getVisibility() != View.VISIBLE ? 0 : 1);
+            if (position < 0) {
                 position = 0;
             }
         }
@@ -315,12 +313,11 @@ public abstract class PullToRefreshDecorator {
     }
 
     private int getLastVisiblePosition() {
-
         int position = 0;
-        if(mView instanceof ListView) {
+        if (mView instanceof ListView) {
             ListView listView = (ListView) mView;
             position = listView.getLastVisiblePosition();
-        } else if(mView instanceof RecyclerView) {
+        } else if (mView instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) mView;
             LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
             position = layoutManager.findLastVisibleItemPosition();
@@ -392,10 +389,10 @@ public abstract class PullToRefreshDecorator {
 
     public void onScrollStateChanged(ViewGroup view, int scrollState) {
         if (mScrollListener != null) {
-            if(view instanceof ListView) {
+            if (view instanceof ListView) {
                 ListView listView = (ListView) view;
                 AbsListView.OnScrollListener listener = (AbsListView.OnScrollListener) mScrollListener;
-            } else if(view instanceof RecyclerView) {
+            } else if (view instanceof RecyclerView) {
                 RecyclerView recyclerView = (RecyclerView) view;
                 RecyclerView.OnScrollListener listener = (RecyclerView.OnScrollListener) mScrollListener;
             }
@@ -404,13 +401,13 @@ public abstract class PullToRefreshDecorator {
 
     public void onScroll(ViewGroup view, Integer... scrollParams) {
         if (mScrollListener != null) {
-            if(view instanceof ListView) {
+            if (view instanceof ListView) {
                 AbsListView.OnScrollListener listener = (AbsListView.OnScrollListener) mScrollListener;
                 ListView listView = (ListView) view;
 //                listener.onScroll(listView, scrollParams[0], scrollParams[1], scrollParams[2]);
                 // send to user's listener
                 mTotalItemCount = scrollParams[2];
-            } else if(view instanceof RecyclerView) {
+            } else if (view instanceof RecyclerView) {
                 RecyclerView.OnScrollListener listener = (RecyclerView.OnScrollListener) mScrollListener;
                 RecyclerView recyclerView = (RecyclerView) view;
 //                listener.onScrolled(recyclerView, scrollParams[0], scrollParams[1]);
@@ -422,7 +419,6 @@ public abstract class PullToRefreshDecorator {
     public void setHandleMeasure(boolean handle) {
         handleMeasure = handle;
     }
-
 
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (!hasMeasure || !handleMeasure) {
@@ -443,16 +439,16 @@ public abstract class PullToRefreshDecorator {
      * onXScrolling when header/footer scroll back.
      */
     public interface OnXScrollListener extends AbsListView.OnScrollListener {
-        public void onXScrolling(View view);
+        void onXScrolling(View view);
     }
 
     /**
      * implements this interface to get refresh/load more event.
      */
     public interface IXListViewListener {
-        public void onRefresh();
+        void onRefresh();
 
-        public void onLoadMore();
+        void onLoadMore();
     }
 
     public View getHeaderView() {

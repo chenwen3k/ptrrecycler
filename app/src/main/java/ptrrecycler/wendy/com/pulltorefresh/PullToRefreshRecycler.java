@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 
 
 /**
- * Created by mfw on 14-11-6.
+ * Created by 3k on 14-11-6.
  */
 public class PullToRefreshRecycler extends RecyclerView {
     private PullToRefreshAdapter mAdapter;
@@ -19,7 +19,7 @@ public class PullToRefreshRecycler extends RecyclerView {
 
     public PullToRefreshRecycler(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mDecorator = new MyPullToRefreshDecorator(this, context, attrs);
+        mDecorator = new SimplePullToRefreshDecorator(this, context, attrs);
         mDecorator.setOnScrollListener(new OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -48,6 +48,14 @@ public class PullToRefreshRecycler extends RecyclerView {
         mDecorator.setPullRefreshEnable(enable);
     }
 
+    public void stopRefresh() {
+        mDecorator.stopRefresh();
+    }
+
+    public void stopLoadMore() {
+        mDecorator.stopLoadMore();
+    }
+
     public void setAdapter(PullToRefreshAdapter adapter) {
         super.setAdapter(adapter);
         mAdapter = adapter;
@@ -61,26 +69,6 @@ public class PullToRefreshRecycler extends RecyclerView {
         return super.onTouchEvent(e);
     }
 
-    private class MyPullToRefreshDecorator extends PullToRefreshDecorator {
-
-        /**
-         * Add a pull to refresh view to any view
-         * Step1. set a refresh listener {@link PullToRefreshDecorator#setXListViewListener(PullToRefreshDecorator.IXListViewListener)}.
-         * Step4. call {@link PullToRefreshDecorator#onScroll(android.view.ViewGroup, int, int, int)}.
-         *
-         * @param context
-         * @param attrs
-         */
-        public MyPullToRefreshDecorator(PullToRefreshRecycler recycler, Context context, AttributeSet attrs) {
-            super(recycler, context, attrs);
-        }
-
-        @Override
-        public void setMeasuredDimension(int width, int height) {
-            this.setMeasuredDimension(width, height);
-        }
-    }
-
     @Override
     public void computeScroll() {
         super.computeScroll();
@@ -91,20 +79,22 @@ public class PullToRefreshRecycler extends RecyclerView {
         mDecorator.setXListViewListener(listener);
     }
 
-    public void stopRefresh() {
-        mDecorator.stopRefresh();
-    }
+    private class SimplePullToRefreshDecorator extends PullToRefreshDecorator {
+        /**
+         * Add a pull to refresh view to any view
+         * Step1. set a refresh listener {@link PullToRefreshDecorator#setXListViewListener(PullToRefreshDecorator.IXListViewListener)}.
+         * Step4.
+         *
+         * @param context
+         * @param attrs
+         */
+        public SimplePullToRefreshDecorator(PullToRefreshRecycler recycler, Context context, AttributeSet attrs) {
+            super(recycler, context, attrs);
+        }
 
-    public void stopLoadMore() {
-        mDecorator.stopLoadMore();
-    }
-
-    @Override
-    public void scrollBy(int x, int y) {
-        try {
-            super.scrollBy(x, y);
-        } catch (Exception e) {
-            e.printStackTrace();
+        @Override
+        public void setMeasuredDimension(int width, int height) {
+            this.setMeasuredDimension(width, height);
         }
     }
 }

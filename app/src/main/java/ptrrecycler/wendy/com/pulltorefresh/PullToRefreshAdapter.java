@@ -15,7 +15,7 @@ public abstract class PullToRefreshAdapter extends RecyclerView.Adapter<PullToRe
     private static final int TYPE_CUSTOM = 3;
     private View mHeaderView;
     private View mFooterView;
-    Context mContext;
+    private Context mContext;
 
     /**
      * --------------------
@@ -62,7 +62,7 @@ public abstract class PullToRefreshAdapter extends RecyclerView.Adapter<PullToRe
         return i;
     }
 
-    final private int getRealPosition(int position) {
+    private int getRealPosition(int position) {
         if (mHeaderView != null) {
             position--;
         }
@@ -74,7 +74,6 @@ public abstract class PullToRefreshAdapter extends RecyclerView.Adapter<PullToRe
     }
 
     public int getLastContentPosition() {
-
         // last position: no footer, size - 1, has footer, size - 2
         int lastPosition = mFooterView == null ? getItemCount() - 1 : getItemCount() - 2;
         return lastPosition;
@@ -95,6 +94,7 @@ public abstract class PullToRefreshAdapter extends RecyclerView.Adapter<PullToRe
         if (mHeaderView != null) {
             itemCount++;
         }
+
         if (contentItemCount == 0) {
             return itemCount;
         }
@@ -113,14 +113,6 @@ public abstract class PullToRefreshAdapter extends RecyclerView.Adapter<PullToRe
             return TYPE_FOOTER;
         }
         return TYPE_CUSTOM;
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        public ViewHolder(View v) {
-            super(v);
-
-        }
     }
 
     public static class PullToRefreshViewHolder extends RecyclerView.ViewHolder {
